@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // JavaScript alert for success and redirection
         echo "<script>
                 alert('Registration successful!');
-                window.location.href = 'login.php'; // Redirect to login page
+                window.location.href = '../login.php'; // Redirect to login page
               </script>";
     } else {
         // JavaScript alert for error
