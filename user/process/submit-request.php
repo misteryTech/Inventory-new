@@ -17,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $request_id = mysqli_insert_id($conn);  // Get the ID of the newly inserted request
 
         // Insert each requested product into the request_products table
+        $success = true;  // Initialize success flag
+
         if (isset($_POST['selected_products']) && !empty($_POST['selected_products'])) {
             foreach ($_POST['selected_products'] as $product_id) {
                 $quantity = isset($_POST['request_quantity'][$product_id]) ? $_POST['request_quantity'][$product_id] : 0;
@@ -28,10 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (!mysqli_query($conn, $query)) {
                         // Handle query error
                         echo "Error: " . mysqli_error($conn);
+                        $success = false;  // Set success to false if any query fails
                     }
                 }
             }
 
+            // Check if all product insertions were successful
             if ($success) {
                 // Success: All products added
                 echo "<script>alert('Your request has been submitted successfully!'); window.location.href = '../index.php';</script>";

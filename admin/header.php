@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $User_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 
+
 // Set timezone to Philippine Standard Time
 date_default_timezone_set('Asia/Manila');
 ?>

@@ -12,7 +12,7 @@ include("header.php");
                         <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                             <div class="brand-logo">
                                 
-                                <h1 style="color:red; font-style: arial;">Online Inventory System</h1>
+                                <h2 style="color:red; font-style: arial;">Online Inventory System</h2>
                             </div>
 
             
