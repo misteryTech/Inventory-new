@@ -33,7 +33,7 @@ if (isset($_GET['department'])) {
                                                 <?php
                                                 $query = "SELECT  U.*, PR.*
                                                           FROM product_requests AS PR 
-                                                          INNER JOIN USERS AS U ON PR.session_id = U.id
+                                                          INNER JOIN users AS U ON PR.session_id = U.id
                                                           WHERE PR.status = 'Pending' AND U.department = '$department'";
                                                 $result = mysqli_query($conn, $query);
 

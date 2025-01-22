@@ -25,7 +25,7 @@ include("header.php");
                                             <?php
                                             $query = "SELECT DISTINCT U.department, PR.*
                                                       FROM product_requests AS PR 
-                                                      INNER JOIN USERS AS U ON PR.session_id = U.id
+                                                      INNER JOIN users AS U ON PR.session_id = U.id
                                                       WHERE PR.status = 'Pending' 
                                                       GROUP BY U.department";
                                             $result = mysqli_query($conn, $query);
