@@ -78,7 +78,7 @@ if (isset($_GET['department'])) {
                                         </table>
                                     </div>
                                     <div style="margin-top: 50px;">
-                                        <p><strong>Prepared By:</strong></p>
+                                        <p><strong>Prepared By: Charlotte Lapura</strong></p>
                                         <p style="text-align: right;"><strong>AMOR IRISH D. LOZANO, CPA/MBA</strong> <br> President </p>
                                     </div>
                                 </div>

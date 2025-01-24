@@ -92,7 +92,7 @@
 <?php
 // Assuming you have a database connection stored in $conn
 // Fetch products from the database
-$query = "SELECT * FROM products WHERE stock <= reorder_point AND archive='No' ";
+$query = "SELECT * FROM products WHERE  archive='No' ";
 $result = mysqli_query($conn, $query);
 
 // Check if today is Wednesday

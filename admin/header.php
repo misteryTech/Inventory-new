@@ -10,6 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $User_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
+$firstnane = $_SESSION['firstname'];
 
 
 // Set timezone to Philippine Standard Time
