@@ -1,6 +1,12 @@
 <?php
     include("header.php");
 ?>
+
+<style>
+  select.form-select {
+        color:black;
+    }
+</style>
    <body class="with-welcome-text">
     <div class="container-scroller">
         <?php
@@ -16,7 +22,7 @@
         include("sidebar.php")
       ?>
 
-   
+
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
@@ -61,21 +67,21 @@
               <label for="productStock">Stock</label>
               <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter stock" required>
           </div>
-          
+
           <div class="col-md-6">
               <label for="reorderPoint">Reorder Point</label>
               <input type="number" class="form-control" id="reorderPoint" name="reorder_point" placeholder="Enter reorder point" required>
           </div>
       </div>
-      
 
-      
+
+
 
                 <div class="form-group mt-3">
             <label for="supplier">Supplier</label>
 
             <input type="text" class="form-control" id="supplier" name="supplier" placeholder="Supplier" required>
-          
+
         </div>
 
 
@@ -94,21 +100,29 @@
         </select>
         <span class="input-group-text">📦</span>
     </div>
+
+    <button class="btn btn-primary mt-3" type="button" id="addProductUnit">
+            Add Product Unit
+    </button>
 </div>
 
 <div class="form-group mt-3">
     <label for="condition" class="form-label">Condition</label>
-    <div class="input-group">
-        <select class="form-select" id="condition" name="condition" required>
-            <option selected>--Select Condition--</option>
-            <option value="New">New</option>
-            <option value="Used">Used</option>
-            <option value="Refurbished">Refurbished</option>
-            <option value="Damaged">Damaged</option>
-        </select>
-        <span class="input-group-text">🛠️</span>
-    </div>
+    <select class="form-select" id="condition" name="condition" required>
+        <option selected>--Select Condition--</option>
+        <option value="New">New</option>
+        <option value="Used">Used</option>
+        <option value="Refurbished">Refurbished</option>
+        <option value="Damaged">Damaged</option>
+    </select>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+
+
 </div>
+
 
 <div class="form-group mt-3">
     <label for="productCategory" class="form-label">Category</label>
@@ -122,6 +136,10 @@
         </select>
         <span class="input-group-text">📂</span>
     </div>
+
+    <button class="btn btn-primary mt-3" type="button" id="addProductUnit">
+            Add Category
+    </button>
 </div>
 
 
@@ -130,7 +148,7 @@
             <label for="productImage">Upload Product Image</label>
             <input type="file" class="form-control" id="productImage" name="product_image">
         </div>
-        <button type="submit" class="btn btn-primary mt-4">Register Product</button>
+        <button type="submit" class="btn btn-success mt-4">Register Product</button>
     </form>
 
 
@@ -138,7 +156,7 @@
                 </div>
               </div>
 
-          
+
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:../../partials/_footer.html -->
@@ -146,8 +164,20 @@
             include("footer.php");
    ?>
    <script>
+
+
+document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('registerUnitForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Unit Registered: ' + document.getElementById('newUnitName').value);
+            const modal = bootstrap.Modal.getInstance(document.getElementById('registerUnitModal'));
+            modal.hide();
+        });
+    });
+
+
       document.getElementById("generateBatchNumber").addEventListener("click", function(){
-          
+
         const timestamp = new Date().getTime();
         const randomLetters = (length) => {
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
