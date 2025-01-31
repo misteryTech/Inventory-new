@@ -11,8 +11,8 @@ include("header.php");
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Product Table</h4>
-                                <p class="card-description"> Manage products with Edit, Archive options, and select for printing. </p>
+                                <h4 class="card-title">Product Transfer</h4>
+                            
                                 
                                 <!-- Button to print selected products -->
                                 <button class="btn btn-primary mb-3" id="viewSelectedBtn">View & Print Selected</button>
@@ -23,14 +23,9 @@ include("header.php");
                                             <tr>
                                                 <th><input type="checkbox" id="selectAllCheckbox"></th> <!-- Select All checkbox -->
                                                 <th>Barcode</th>
-                                       
                                                 <th>Product Name</th>
-                                                <th>Category</th>
-                                                <th>Condition</th>
-                                                <th>Price</th>
                                                 <th>Stock</th>
-                                                <th>Date</th>
-                                                <th>Actions</th>
+                                                <th>Release Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>

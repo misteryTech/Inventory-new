@@ -83,17 +83,26 @@
         <div class="form-group mt-3">
     <label for="productUnit" class="form-label">Product Unit</label>
     <div class="input-group">
+
+    <?php
+                $query_unit = "SELECT unit FROM unit";
+                $result_unit = mysqli_query($conn, $query_unit);
+    ?>
         <select class="form-select" id="productUnit" name="product_unit" required>
-            <option selected>--Select Unit--</option>
-            <option value="Piece">Piece</option>
-            <option value="Box">Box</option>
-            <option value="Kg">Kilogram (Kg)</option>
-            <option value="Litre">Litre</option>
-            <option value="Meter">Meter</option>
-            <option value="Other">Other</option>
+        <?php while ($row = mysqli_fetch_assoc($result_unit)) { ?>
+            <option value="<?= htmlspecialchars($row['unit']) ?>"><?= htmlspecialchars($row['unit']) ?></option>
+        <?php } ?>
         </select>
-        <span class="input-group-text">📦</span>
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addUnitModal">
+        Add Unit
+    </button>
+
     </div>
+
+
+
+
+
 </div>
 
 <div class="form-group mt-3">
@@ -113,15 +122,29 @@
 <div class="form-group mt-3">
     <label for="productCategory" class="form-label">Category</label>
     <div class="input-group">
+
+    <?php
+                $query_category = "SELECT category_name FROM category";
+                $result_category = mysqli_query($conn, $query_category);
+    ?>
+
+
         <select class="form-select" id="productCategory" name="product_category" required>
-            <option value="Electronics">Electronics</option>
-            <option value="Fashion">Fashion</option>
-            <option value="Home & Kitchen">Home & Kitchen</option>
-            <option value="Beauty">Beauty</option>
-            <option value="Other">Other</option>
+        <?php while ($row_category = mysqli_fetch_assoc($result_category)) { ?>
+            <option value="<?= htmlspecialchars($row_category['category_name']) ?>"><?= htmlspecialchars($row_category['category_name']) ?></option>
+        <?php } ?>
+
+
         </select>
-        <span class="input-group-text">📂</span>
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+        Add Category
+    </button>
+
+
     </div>
+
+
+
 </div>
 
 
@@ -132,6 +155,54 @@
         </div>
         <button type="submit" class="btn btn-primary mt-4">Register Product</button>
     </form>
+
+
+    
+<!-- Modal for Adding New Unit -->
+<div class="modal fade" id="addUnitModal" tabindex="-1" aria-labelledby="addUnitModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUnitModalLabel">Add New Unit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addUnitForm"  method="POST">
+                    <div class="mb-3">
+                        <label for="unit" class="form-label">Unit Name</label>
+                        <input type="text" class="form-control" id="unit" name="unit">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Unit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Modal for Adding New Unit -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addCategoryForm">
+                    <div class="mb-3">
+                        <label for="newCategory" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="newCategory" name="newCategory" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Unit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
                   </div>
@@ -167,4 +238,40 @@
 
 
 
+      $(document).ready(function () {
+            // Handle form submission to add a new unit
+                 $('#addUnitForm').submit(function (e) {
+                     e.preventDefault();
+                          let newUnit = $('#unit').val();
+
+                     $.ajax({
+                         url: 'process/add_unit.php', // API to add unit to database
+                         type: 'POST',
+                         data: { unit: newUnit },
+                         success: function (response) {
+                             alert(response);
+                             $('#addUnitModal').modal('hide'); // Close modal
+                             location.reload();
+                         }
+                     });
+                 });
+
+
+                 $('#addCategoryForm').submit(function (e){
+                     e.preventDefault();
+                          let newCategory = $('#newCategory').val();
+
+                     $.ajax({
+                         url: 'process/add_category.php', // API to add unit to database
+                         type: 'POST',
+                         data: { category_name: newCategory },
+                         success: function (response) {
+                             alert(response);
+                             $('#addCategoryModal').modal('hide'); // Close modal
+                             location.reload();
+                         }
+                     });
+
+                 });
+      });
    </script>

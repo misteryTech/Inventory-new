@@ -71,15 +71,113 @@
                                     <div class="tab-pane fade" id="User" role="tabpanel" aria-labelledby="profile-tab">
                                         <!-- User Content -->
                                         <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                    <div>
-                                                        <p class="statistics-title">User Engagement</p>
-                                                        <h3 class="rate-percentage">65.5%</h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+    <div class="col-lg-12 d-flex flex-column">
+        <div class="card card-rounded">
+            <div class="card-body">
+                <h4 class="card-title">Requested Products</h4>
+                
+                <div class="table-responsive mt-3">
+                <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Request Name</th>
+            <th>Department</th>
+            <th>Request Date</th>
+            <th>Status</th>
+            <th>Release No.</th>
+            <th>View Item</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        // Fetch requested products from the database
+        $query_pr = "SELECT PR.*, U.*
+        
+         FROM product_requests AS PR
+         INNER JOIN users AS U ON U.id = PR.session_id 
+        ";
+        $result_pr = mysqli_query($conn, $query_pr);
+
+        if ($result_pr && mysqli_num_rows($result_pr) > 0) {
+            while ($row_pr = mysqli_fetch_assoc($result_pr)) {
+                $status = htmlspecialchars($row_pr['status']);
+                $requestId = htmlspecialchars($row_pr['request_id']);
+
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row_pr['firstname']. ' ' . $row_pr['lastname']) . "</td>";
+                echo "<td>" . htmlspecialchars($row_pr['department']) . "</td>";
+                echo "<td>" . htmlspecialchars($row_pr['request_date']) . "</td>";
+                echo "<td>" . htmlspecialchars($row_pr['status']) . "</td>";
+                echo "<td>" . htmlspecialchars($row_pr['release_form']) . "</td>";
+                
+                // Display status with colored badge
+                echo "<td>";
+                // Fetch products based on request_id
+                $productQuery = "SELECT P.product_name, RP.status, RP.quantity, P.batch_number
+                                 FROM request_products AS RP
+                                 INNER JOIN products AS P ON RP.product_id = P.batch_number
+                                 WHERE RP.request_id = '$requestId'";
+                $productResult = mysqli_query($conn, $productQuery);
+
+                if (mysqli_num_rows($productResult) > 0) {
+                    echo "<ul>";
+                    while ($product = mysqli_fetch_assoc($productResult)) {
+                        $productName = htmlspecialchars($product['product_name']);
+                        $status = htmlspecialchars($product['status']);
+                        $quantity = htmlspecialchars($product['quantity']);
+                        echo "<h6><li>{$productName}</h6> -  Status: {$status}, Quantity: {$quantity}</li>";
+                    }
+                    echo "</ul>";
+                } else {
+                    echo "<p>No products found for this request.</p>";
+                }
+                echo "</td>";
+
+                // Release button
+                echo "<td>";
+                if ($status !== 'Released') {
+                    echo "<form method='POST' action='process/release_product.php'>";
+                    echo "<input type='hidden' name='request_id' value='" . htmlspecialchars($row_pr['request_id']) . "'>";
+
+                    // Add product info for release
+                    $productResult = mysqli_query($conn, $productQuery); // Re-query products
+                    if (mysqli_num_rows($productResult) > 0) {
+                        while ($product = mysqli_fetch_assoc($productResult)) {
+                            echo "<input type='text' name='session_id' value='" . htmlspecialchars($row_pr['session_id']) . "'>";
+                            echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($product['product_name']) . "'>";
+                            echo "<input type='text' name='batch_number' value='" . htmlspecialchars($product['batch_number']) . "'>";
+                            echo "<label for='quantity'>Quantity to Release:</label>";
+                            echo "<input type='number' name='quantity' value='" . htmlspecialchars($product['quantity']) . "' min='1' max='" . htmlspecialchars($product['quantity']) . "' required>";
+                            echo "<br>";
+                        }
+                    }
+
+                    echo "<button type='submit' name='release_request' class='btn btn-primary btn-sm'>Release Request</button>";
+                    echo "</form>";
+                } else {
+                    echo "<button class='btn btn-secondary btn-sm' disabled>Released</button>";
+                }
+                echo "</td>";
+
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='6' class='text-center'>No product requests found.</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
+                </div> <!-- table-responsive -->
+            </div> <!-- card-body -->
+        </div> <!-- card -->
+    </div> <!-- col-lg-12 -->
+</div> <!-- row -->
+
+
+
+
                                     </div>
 
 
@@ -87,15 +185,15 @@
                                     
                                     <div class="tab-pane fade" id="Products" role="tabpanel" aria-labelledby="contact-tab">
                                         <!-- Products Content -->
-                                        <div class="row">
+                                  
                                         <div class="row">
                         <div class="col-lg-8 d-flex flex-column">
-                        <?php
-// Assuming you have a database connection stored in $conn
-// Fetch products where reorder_point < stock
-$query = "SELECT * FROM products WHERE reorder_point > stock";
-$result = mysqli_query($conn, $query);
-?>
+                         <?php
+                          // Assuming you have a database connection stored in $conn
+                          // Fetch products where reorder_point < stock
+                          $query = "SELECT * FROM products WHERE reorder_point > stock";
+                          $result = mysqli_query($conn, $query);
+                          ?>
 
 <div class="row flex-grow">
   <div class="col-12 grid-margin stretch-card">
@@ -166,15 +264,15 @@ $result = mysqli_query($conn, $query);
       </div>
       <div class="modal-body">
         <form action="process/reorder_product.php" method="POST">
-          <input type="text" session_id="product_id" id="product_id">
-          <input type="text" session_id="current_stocks" id="current_stocks">
+          <input type="text" name="batch_number" session_id="product_id" id="product_id">
+          <input type="text" name="current_stocks" session_id="current_stocks" id="current_stocks">
           <div class="mb-3">
             <label for="reorder_quantity" class="form-label">Quantity Restocks</label>
-            <input type="number" class="form-control" session_id="reorder_quantity" id="reorder_quantity" required>
+            <input type="number" name="reorder_quantity" class="form-control" session_id="reorder_quantity" id="reorder_quantity" required>
           </div>
           <div class="mb-3">
             <label for="reorder_notes" class="form-label">Notes (optional)</label>
-            <textarea class="form-control" session_id="reorder_notes" id="reorder_notes"></textarea>
+            <textarea class="form-control" name="reorder_notes" session_id="reorder_notes" id="reorder_notes"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Place Reorder</button>
         </form>

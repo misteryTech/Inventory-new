@@ -46,3 +46,9 @@ date_default_timezone_set('Asia/Manila');
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
   </head>
+
+  <style>
+    select.form-select {
+    color: black;
+    }
+  </style>

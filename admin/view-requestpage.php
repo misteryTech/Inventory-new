@@ -47,7 +47,7 @@ $session_user = $_SESSION['username']; // Get the username from the session
                     echo '<th>Condition</th>';
                     echo '<th>Quantity Requested</th>';
                     echo '<th>Status</th>';
-                    echo '<th>Approved By';
+                    echo '<th>Manage By</th>';
                     echo '<th>Action</th>';
                     echo '</tr>';
                     echo '</thead>';
@@ -61,19 +61,36 @@ $session_user = $_SESSION['username']; // Get the username from the session
                         echo '<td>' . htmlspecialchars($row['batch_number']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['product_condition']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['quantity']) . '</td>';
-                        echo '<td>' . ($status === 'Approved' ? "<span class='badge badge-success'>Approved</span>" : "<span class='badge badge-warning'>Pending</span>") . '</td>';
+                        echo '<td>';
+                        if ($status === 'Approved') {
+                            echo "<span class='badge badge-success'>Approved</span>";
+                        } elseif ($status === 'Declined') {
+                            echo "<span class='badge badge-danger'>Declined</span>";
+                        } else {
+                            echo "<span class='badge badge-warning'>Pending</span>";
+                        }
+                        echo '</td>';
                         echo '<td>' . htmlspecialchars($row['approved1']) . '</td>';
                         echo '<td>';
-                        // Form for each product's approval
-                        if ($status !== 'Approved') {
-                            echo '<form method="POST" action="process/update_product_request.php">';
+
+                        // Approve Button
+                        if ($status !== 'Approved' && $status !== 'Declined') {
+                            echo '<form method="POST" action="process/update_product_request.php" style="display:inline-block; margin-right: 5px;">';
                             echo '<input type="hidden" name="request_id" value="' . htmlspecialchars($request_id) . '">';
                             echo '<input type="hidden" name="batch_number" value="' . htmlspecialchars($row['batch_number']) . '">';
                             echo '<button type="submit" name="approve_request" class="btn btn-success btn-sm">Approve</button>';
                             echo '</form>';
-                        } else {
-                            echo '<button class="btn btn-secondary btn-sm" disabled>Approved</button>';
                         }
+
+                        // Decline Button
+                        if ($status !== 'Declined' && $status !== 'Approved') {
+                            echo '<form method="POST" action="process/decline_product_request.php" style="display:inline-block;">';
+                            echo '<input type="hidden" name="request_id" value="' . htmlspecialchars($request_id) . '">';
+                            echo '<input type="hidden" name="batch_number" value="' . htmlspecialchars($row['batch_number']) . '">';
+                            echo '<button type="submit" name="decline_request" class="btn btn-danger btn-sm">Decline</button>';
+                            echo '</form>';
+                        }
+
                         echo '</td>';
                         echo '</tr>';
                     }
@@ -86,7 +103,7 @@ $session_user = $_SESSION['username']; // Get the username from the session
                     echo '</div>'; // col-12
                     echo '</div>'; // row flex-grow
                 } else {
-                    echo "<div class='alert '>No products found for this request.</div>";
+                    echo "<div class='alert alert-info'>No products found for this request.</div>";
                 }
             } else {
                 echo "<div class='alert alert-danger'>Error fetching products: " . mysqli_error($conn) . "</div>";

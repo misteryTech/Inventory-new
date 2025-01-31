@@ -72,13 +72,13 @@ if (isset($_GET['department'])) {
                                                     }
                                                 } else {
                                                     echo "<tr><td colspan='4'>No requests found for this office.</td></tr>";
-                                                }
+                                                } 
                                                 ?>
                                             </tbody>
                                         </table>
                                     </div>
                                     <div style="margin-top: 50px;">
-                                        <p><strong>Prepared By: Charlotte Lapura</strong></p>
+                                        <p>Prepared By:<strong> Charlotte Lapura</strong></p>
                                         <p style="text-align: right;"><strong>AMOR IRISH D. LOZANO, CPA/MBA</strong> <br> President </p>
                                     </div>
                                 </div>
