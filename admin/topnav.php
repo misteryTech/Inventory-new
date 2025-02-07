@@ -6,10 +6,10 @@
             </button>
           </div>
           <div>
-            <a class="navbar-brand brand-logo" href="index.html">
+            <a class="navbar-brand brand-logo" href="index.php">
               <img src="../LOGO1.png" alt="logo" />
             </a>
-            <a class="navbar-brand brand-logo-mini" href="index.html">
+            <a class="navbar-brand brand-logo-mini" href="index.php">
               <img src="assets/images/logo-mini.svg" alt="logo" />
             </a>
           </div>

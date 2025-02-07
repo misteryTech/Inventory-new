@@ -144,9 +144,9 @@
                     $productResult = mysqli_query($conn, $productQuery); // Re-query products
                     if (mysqli_num_rows($productResult) > 0) {
                         while ($product = mysqli_fetch_assoc($productResult)) {
-                            echo "<input type='text' name='session_id' value='" . htmlspecialchars($row_pr['session_id']) . "'>";
+                            echo "<input type='hidden' name='session_id' value='" . htmlspecialchars($row_pr['session_id']) . "'>";
                             echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($product['product_name']) . "'>";
-                            echo "<input type='text' name='batch_number' value='" . htmlspecialchars($product['batch_number']) . "'>";
+                            echo "<input type='hidden' name='batch_number' value='" . htmlspecialchars($product['batch_number']) . "'>";
                             echo "<label for='quantity'>Quantity to Release:</label>";
                             echo "<input type='number' name='quantity' value='" . htmlspecialchars($product['quantity']) . "' min='1' max='" . htmlspecialchars($product['quantity']) . "' required>";
                             echo "<br>";
@@ -303,7 +303,7 @@ $sql = "SELECT PR.*, U.*
 
 
  FROM product_requests AS PR
- INNER JOIN users AS U ON U.id = PR.session_id";
+ INNER JOIN users AS U ON U.id = PR.session_id ORDER BY request_date DESC";
 $result = $conn->query($sql);
 
 // Fetch finished and remaining counts
@@ -363,7 +363,7 @@ $formattedDate = date("F j, Y h:i A", strtotime($originalDate));
       <div class="list align-items-center pt-3">
         <div class="wrapper w-100">
           <p class="mb-0">
-            <a href="#" class="fw-bold text-primary">Show all <i class="mdi mdi-arrow-right ms-2"></i></a>
+            <a href="product-request.php" class="fw-bold text-primary">Show all <i class="mdi mdi-arrow-right ms-2"></i></a>
           </p>
         </div>
       </div>

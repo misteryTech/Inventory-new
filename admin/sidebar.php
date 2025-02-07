@@ -23,6 +23,22 @@
             </li>
 
 
+            <li class="nav-item  <?= $current_page =='product-request.php' ? 'active' : ''?>">
+              <a class="nav-link" href="product-request.php">
+                <i class="fa fa-shopping-bag  menu-icon"></i>
+                <span class="menu-title">Product Request</span>
+              </a>
+            </li>
+
+
+            
+            <li class="nav-item  <?= $current_page =='approved-request.php' ? 'active' : ''?>">
+              <a class="nav-link" href="approved-request.php">
+                <i class="fa fa-check  menu-icon"></i>
+                <span class="menu-title">Approved Request</span>
+              </a>
+            </li>
+
 
 
             <li class="nav-item">

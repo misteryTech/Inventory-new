@@ -43,7 +43,7 @@ include("header.php");
                                                     echo "<td><input type='checkbox' class='product-checkbox' value='" . $productId . "'></td>";
                                                     
                                                     // Display product details
-                                                    echo "<td><img src='process/" . $row['qr_code_path'] . "' alt='QR Code' width='100' height='150'></td>";
+                                                    echo "<td><img src='../admin/process/" . $row['qr_code_path'] . "' alt='QR Code' width='100' height='150'></td>";
                                                   
                                                     echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['product_category']) . "</td>";

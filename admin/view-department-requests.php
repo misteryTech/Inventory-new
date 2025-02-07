@@ -77,12 +77,9 @@ if (isset($_GET['department'])) {
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div style="margin-top: 50px;">
-                                        <p>Prepared By:<strong> Charlotte Lapura</strong></p>
-                                        <p style="text-align: right;"><strong>AMOR IRISH D. LOZANO, CPA/MBA</strong> <br> President </p>
-                                    </div>
+                                  
                                 </div>
-                                <button class="btn btn-primary mt-3" onclick="printDiv('printableArea')"> <i class="icon-printer"></i> Print</button>
+                            
                             </div>
                         </div>
                     </div>
@@ -92,45 +89,4 @@ if (isset($_GET['department'])) {
         </div>
     </div>
 
-    <script>
-        function printDiv(divId) {
-            var printContents = document.getElementById(divId).innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-
-            // Reload the page to restore original layout
-            location.reload();
-        }
-    </script>
-
-    <style>
-        @media print {
-            body {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .table {
-                width: 100%;
-                border-collapse: collapse !important;
-            }
-            .table th, .table td {
-                border: 1px solid black !important;
-                padding: 8px !important;
-            }
-            h4, p {
-                text-align: center;
-            }
-            .btn {
-                display: none !important;
-            }
-            div[style*="text-align: right;"] {
-                margin-top: 50px;
-                float: right;
-                margin-right: 50px;
-            }
-        }
-    </style>
 </body>

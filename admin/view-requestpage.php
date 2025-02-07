@@ -64,26 +64,27 @@ $session_user = $_SESSION['username']; // Get the username from the session
                         echo '<td>';
                         if ($status === 'Approved') {
                             echo "<span class='badge badge-success'>Approved</span>";
-                        } elseif ($status === 'Declined') {
-                            echo "<span class='badge badge-danger'>Declined</span>";
+                        } elseif ($status === 'Onprocess') {
+                            echo "<span class='badge badge-warning'>Onprocess</span>";
                         } else {
-                            echo "<span class='badge badge-warning'>Pending</span>";
+                            echo "<span class='badge badge-danger'>Decline</span>";
                         }
                         echo '</td>';
                         echo '<td>' . htmlspecialchars($row['approved1']) . '</td>';
                         echo '<td>';
 
                         // Approve Button
-                        if ($status !== 'Approved' && $status !== 'Declined') {
+                        if ($status !== 'Onprocess' && $status !== 'Declined') {
                             echo '<form method="POST" action="process/update_product_request.php" style="display:inline-block; margin-right: 5px;">';
                             echo '<input type="hidden" name="request_id" value="' . htmlspecialchars($request_id) . '">';
                             echo '<input type="hidden" name="batch_number" value="' . htmlspecialchars($row['batch_number']) . '">';
+                            echo '<input type="hidden" name="quantity" value="' . htmlspecialchars($row['quantity']) . '">';
                             echo '<button type="submit" name="approve_request" class="btn btn-success btn-sm">Approve</button>';
                             echo '</form>';
                         }
 
                         // Decline Button
-                        if ($status !== 'Declined' && $status !== 'Approved') {
+                        if ($status !== 'Declined' && $status !== 'Onprocess') {
                             echo '<form method="POST" action="process/decline_product_request.php" style="display:inline-block;">';
                             echo '<input type="hidden" name="request_id" value="' . htmlspecialchars($request_id) . '">';
                             echo '<input type="hidden" name="batch_number" value="' . htmlspecialchars($row['batch_number']) . '">';
