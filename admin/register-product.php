@@ -40,7 +40,7 @@
                     <form action="process/register_product.php" method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label for="productName">Batch Number</label>
+            <label for="productName">Serial Number</label>
             <div class="input-group">
                  <input type="text" class="form-control" id="batchNumber" name="batch_number" placeholder="Enter batch number" required>
                  <button type="button" class="btn btn-secondary" id="generateBatchNumber">Generate</button>
@@ -105,16 +105,6 @@
 
     </div>
 
-<<<<<<< HEAD
-
-
-
-
-=======
-    <button class="btn btn-primary mt-3" type="button" id="addProductUnit">
-            Add Product Unit
-    </button>
->>>>>>> a31edbe4511ca9ea38f89c96393cb95454ca5109
 </div>
 
 <div class="form-group mt-3">
@@ -126,10 +116,7 @@
         <option value="Refurbished">Refurbished</option>
         <option value="Damaged">Damaged</option>
     </select>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-
+  
 
 
 </div>
@@ -140,14 +127,14 @@
     <div class="input-group">
 
     <?php
-                $query_category = "SELECT category_name FROM category";
+                $query_category = "SELECT id,category_name FROM category";
                 $result_category = mysqli_query($conn, $query_category);
     ?>
 
 
         <select class="form-select" id="productCategory" name="product_category" required>
         <?php while ($row_category = mysqli_fetch_assoc($result_category)) { ?>
-            <option value="<?= htmlspecialchars($row_category['category_name']) ?>"><?= htmlspecialchars($row_category['category_name']) ?></option>
+            <option value="<?= htmlspecialchars($row_category['id']) ?>"><?= htmlspecialchars($row_category['category_name']) ?></option>
         <?php } ?>
 
 
@@ -158,18 +145,6 @@
 
 
     </div>
-
-<<<<<<< HEAD
-
-
-=======
-    <button class="btn btn-primary mt-3" type="button" id="addProductUnit">
-            Add Category
-    </button>
->>>>>>> a31edbe4511ca9ea38f89c96393cb95454ca5109
-</div>
-
-
 
         <div class="form-group mt-3">
             <label for="productImage">Upload Product Image</label>

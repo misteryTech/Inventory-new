@@ -74,8 +74,6 @@ if ($result_query_product_request && $row = mysqli_fetch_assoc($result_query_pro
 
 <p class="mb-0 fw-medium float-start">You have <?= $requestCount; ?> new notifications</p>
 
-
-
                   <span class="badge badge-pill badge-primary float-end">View all</span>
                 </a>
               
@@ -108,7 +106,7 @@ if (mysqli_num_rows($result) > 0) {
     </a>
     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
         <div class="dropdown-header text-center">
-            <img class="img-md rounded-circle" src="<?php echo $userImage; ?>" alt="Profile image">
+            <img class="img-md rounded-circle" src="<?php echo $userImage; ?>" alt="Profile image" height="150px">
             <p class="mb-1 mt-3 fw-semibold"><?php echo $userName; ?></p>
             <p class="fw-light text-muted mb-0"><?php echo $userEmail; ?></p>
         </div>

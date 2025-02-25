@@ -27,11 +27,11 @@
                                         </li>
                                     </ul>
                                     <div>
-                                        <div class="btn-wrapper">
+                                        <!-- <div class="btn-wrapper">
                                             <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
                                             <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
                                             <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <!-- single tab-content for all sections -->
@@ -209,7 +209,11 @@ $isWednesday = (date('l') == 'Wednesday');
 <?php
 // Assuming you have a database connection stored in $conn
 // Fetch product categories and their total product count
-$query = "SELECT product_category, COUNT(*) AS total_products FROM products WHERE archive='No' GROUP BY product_category";
+$query = "SELECT category_name, product_category, COUNT(*) AS total_products FROM products as P
+
+INNER JOIN category AS C ON C.id = P.product_category
+
+ WHERE archive='No' GROUP BY product_category";
 $result = mysqli_query($conn, $query);
 ?>
 
@@ -238,7 +242,7 @@ $result = mysqli_query($conn, $query);
               if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                   echo "<tr>";
-                  echo "<td><h6>" . $row['product_category'] . "</h6></td>";
+                  echo "<td><h6>" . $row['category_name'] . "</h6></td>";
                   echo "<td><h6>" . $row['total_products'] . "</h6></td>";
                   echo "</tr>";
                 }
