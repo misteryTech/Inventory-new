@@ -1,6 +1,11 @@
 <?php
    include("header.php");
 ?>
+  <style>
+.content-wrappers {
+  color: red;
+}
+</style>
 <body class="with-welcome-text">
     <div class="container-scroller">
         <?php
@@ -12,7 +17,7 @@
             include("sidebar.php")
             ?>
             <div class="main-panel">
-                <div class="content-wrapper">
+                <div class="content-wrappers">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="home-tab">
@@ -202,8 +207,6 @@ $isWednesday = (date('l') == 'Wednesday');
   </div>
 </div>
                         </div>
-
-
 
                         <div class="col-lg-4 d-flex flex-column">
 <?php
