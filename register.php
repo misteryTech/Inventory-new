@@ -31,7 +31,7 @@
                                     <button type="submit" class="btn btn-block btn-primary btn-lg fw-medium">Sign Up</button>
                                 </div>
                                 <div class="text-center mt-4 fw-light">
-                                    Already have an account? <a href="login.php" class="text-primary">Login</a>
+                                    Already have an account? <a href="index.php" class="text-primary">Login</a>
                                 </div>
                             </form>
                         </div>

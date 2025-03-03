@@ -111,7 +111,6 @@ function printDiv(divId) {
     document.body.innerHTML = printContents;
     window.print();
     document.body.innerHTML = originalContents;
-
     location.reload();
 }
 

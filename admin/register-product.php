@@ -70,7 +70,7 @@
 
           <div class="col-md-6">
               <label for="reorderPoint">Reorder Point</label>
-              <input type="number" class="form-control" id="reorderPoint" name="reorder_point" placeholder="Enter reorder point" required>
+              <input type="hidden" class="form-control" id="reorderPoint" name="reorder_point" placeholder="Enter reorder point" value="3" >
           </div>
       </div>
 
