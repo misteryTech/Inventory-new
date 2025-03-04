@@ -2,22 +2,27 @@
 include("header.php");
 include("connection.php"); // Ensure database connection is included
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 
 // Get the selected category ID from URL (default to 0 if not set)
-$category_id = isset($_GET['product_category']) ? intval($_GET['product_category']) : 0;
+// $category_id = isset($_GET['product_category']) ? intval($_GET['product_category']) : 0;
 
-// Fetch products from the database (filter by category if selected)
+$category_id = 1;
 if ($category_id > 0) {
     $query_product = "SELECT * FROM products WHERE product_category = ?";
     $stmt = $conn->prepare($query_product);
-    $stmt->bind_param("s", $category_id);
+    $stmt->bind_param("i", $category_id); // Fixed: Use "i" for integer
     $stmt->execute();
     $result_query = $stmt->get_result();
 } else {
     $query_product = "SELECT * FROM products";
-    $result_query = $conn->query($query_product);
+    $stmt = $conn->prepare($query_product);
+    $stmt->execute();
+    $result_query = $stmt->get_result();
 }
+
 
 // Check if today is Wednesday
 $isWednesday = (date('l') == 'Wednesday');
@@ -59,31 +64,7 @@ $isWednesday = (date('l') == 'Wednesday');
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php
-                                                    if ($result_query->num_rows > 0) {
-                                                        while ($row = $result_query->fetch_assoc()) {
-                                                            $image_path = !empty($row['product_image']) ? '../admin/process/' . $row['product_image'] : 'assets/images/default-image.jpg';
-                                                            echo "<tr>";
-                                                            echo "<td><input type='checkbox' name='selected_products[]' value='" . htmlspecialchars($row['batch_number']) . "' class='form-check-input'></td>";
-                                                            echo "<td>
-                                                                    <div class='d-flex'>
-                                                                        <img src='$image_path' alt='Product Image'>
-                                                                        <div>
-                                                                            <h6>" . htmlspecialchars($row['product_name']) . "</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                  </td>";
-                                                            echo "<td><h6 class='product-stock'>" . htmlspecialchars($row['stock']) . "</h6></td>";
-                                                            echo "<td><h6>" . htmlspecialchars($row['product_category']) . "</h6></td>";
-                                                            echo "<td>
-                                                                    <input type='number' name='request_quantity[" . htmlspecialchars($row['batch_number']) . "]' class='form-control' min='1' placeholder='Enter quantity'>
-                                                                  </td>";
-                                                            echo "</tr>";
-                                                        }
-                                                    } else {
-                                                        echo "<tr><td colspan='5'>No products available.</td></tr>";
-                                                    }
-                                                    ?>
+                                                 
                                                 </tbody>
                                             </table>
                                         </div>
@@ -129,7 +110,7 @@ $isWednesday = (date('l') == 'Wednesday');
         </div>
     </div>
 </body>
-
+<!-- 
 <script>
     
 function showConfirmationModal(event) {
@@ -223,4 +204,4 @@ function showConfirmationModal(event) {
 }
 
 
-</script>
+</script> -->

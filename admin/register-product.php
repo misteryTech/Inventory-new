@@ -63,15 +63,14 @@
 
 
               <div class="form-group mt-3 row">
-          <div class="col-md-6">
+          <div class="col-md-12">
               <label for="productStock">Stock</label>
               <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter stock" required>
           </div>
 
-          <div class="col-md-6">
-              <label for="reorderPoint">Reorder Point</label>
+       
               <input type="hidden" class="form-control" id="reorderPoint" name="reorder_point" placeholder="Enter reorder point" value="3" >
-          </div>
+   
       </div>
 
 
