@@ -4,6 +4,7 @@ include("connection.php"); // Ensure database connection is included
 
 
 
+
 // Get the selected category ID from URL (default to 0 if not set)
 $category_id = isset($_GET['product_category']) ? intval($_GET['product_category']) : 0;
 
@@ -131,8 +132,29 @@ $isWednesday = (date('l') == 'Wednesday');
 </body>
 
 <script>
+$(document).ready(function () {
+    // Check user details on page load
+    $.ajax({
+        url: "validate/check_user_details.php",
+        type: "POST",
+        dataType: "json",
+        success: function (response) {
+            if (!response.complete) {
+                alert("Please complete your profile before accessing this page.");
+                window.location.href = "profile-page.php"; // Redirect to profile page
+            }
+        },
+        error: function () {
+            alert("Error checking user details.");
+        }
+    });
+});
+
+
     
 function showConfirmationModal(event) {
+
+    
   event.preventDefault();
 
   // Get selected products

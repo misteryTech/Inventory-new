@@ -66,8 +66,9 @@ $session_user = $_SESSION['username']; // Get the username from the session
                             echo "<span class='badge badge-success'>Approved</span>";
                         } elseif ($status === 'Onprocess') {
                             echo "<span class='badge badge-warning'>Onprocess</span>";
-                        } else {
-                            echo "<span class='badge badge-danger'>Decline</span>";
+                        } 
+                        else {
+                            echo "<span class='badge badge-primary'>Pending</span>";
                         }
                         echo '</td>';
                         echo '<td>' . htmlspecialchars($row['approved1']) . '</td>';

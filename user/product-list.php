@@ -16,98 +16,72 @@ include("header.php");
                                 
                                 <!-- Button to print selected products -->
                                 <button class="btn btn-primary mb-3" id="viewSelectedBtn">View & Print Selected</button>
-                                
+                         
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="affiliateTable">
                                         <thead>
                                             <tr>
                                                 <th><input type="checkbox" id="selectAllCheckbox"></th> <!-- Select All checkbox -->
-                                                <th>Barcode</th>
-                                                <th>Product Name</th>
-                                                <th>Stock</th>
-                                                <th>Release Date</th>
+                                                <th>Session ID</th>
+                                                <th>Status</th>
+                                                <th>Request Date</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             // Query to fetch products and barcode
-                                            $query = "SELECT * FROM products WHERE archive='No'"; 
+                                            $query = "SELECT PR.*, PR.status AS request_status, RP.* FROM product_requests AS PR
+                                            
+                                            INNER JOIN request_products AS RP ON RP.request_id = PR.request_id
+                                            WHERE PR.session_id = $User_id "; 
                                             $result = mysqli_query($conn, $query);
 
                                             if (mysqli_num_rows($result) > 0) {
                                                 while ($row = mysqli_fetch_assoc($result)) {
-                                                    $productId = $row['id'];
+                                                    $request_id = $row['request_id'];
+                                                    $request_status = $row['request_status'];
                                                     echo "<tr>";
                                                     
                                                     // Add a checkbox for each product
-                                                    echo "<td><input type='checkbox' class='product-checkbox' value='" . $productId . "'></td>";
+                                                    echo "<td><input type='checkbox' class='product-checkbox' value='" . $request_id . "'></td>";
                                                     
                                                     // Display product details
-                                                    echo "<td><img src='../admin/process/" . $row['qr_code_path'] . "' alt='QR Code' width='100' height='150'></td>";
+                                                    // echo "<td><img src='../admin/process/" . $row['qr_code_path'] . "' alt='QR Code' width='100' height='150'></td>";
                                                   
-                                                    echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
-                                                    echo "<td>" . htmlspecialchars($row['product_category']) . "</td>";
-                                                    echo "<td>" . htmlspecialchars($row['product_condition']) . "</td>";
-                                                    echo "<td>" . htmlspecialchars($row['product_price']) . "</td>";
-                                                    echo "<td>" . htmlspecialchars($row['stock']) . "</td>";
-                                                    echo "<td>" . date("d-m-Y", strtotime($row['created_at'])) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['request_id']) . "</td>";
+                                                    echo "<td>"  .$request_status ."</td>";
+                                                    echo "<td>" . date("d-m-Y", strtotime($row['request_date'])) . "</td>";
+                                
                                                     echo "<td>
-                                                        <button class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal$productId'>Edit</button>
-                                                        <button class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#archiveModal$productId'>Archive</button>
+                                                        
+                                                        <button class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#archiveModal$request_id'>View Request</button>
                                                     </td>";
                                                     echo "</tr>";
 
-                                                    // Edit Modal
-                                                    echo "<div class='modal fade' id='editModal$productId' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
-                                                        <div class='modal-dialog'>
-                                                            <div class='modal-content'>
-                                                                <div class='modal-header'>
-                                                                    <h5 class='modal-title' id='editModalLabel'>Edit Product</h5>
-                                                                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                                                                </div>
-                                                                <form action='process/edit_product.php' method='POST'>
-                                                                    <div class='modal-body'>
-                                                                        <input type='hidden' name='id' value='$productId'>
-                                                                        <div class='mb-3'>
-                                                                            <label for='productName' class='form-label'>Product Name</label>
-                                                                            <input type='text' class='form-control' name='product_name' value='" . htmlspecialchars($row['product_name']) . "' required>
-                                                                        </div>
-                                                                        <div class='mb-3'>
-                                                                            <label for='productPrice' class='form-label'>Price</label>
-                                                                            <input type='number' step='0.01' class='form-control' name='product_price' value='" . htmlspecialchars($row['product_price']) . "' required>
-                                                                        </div>
-                                                                        <div class='mb-3'>
-                                                                            <label for='stock' class='form-label'>Stock</label>
-                                                                            <input type='number' class='form-control' name='stock' value='" . htmlspecialchars($row['stock']) . "' required>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class='modal-footer'>
-                                                                        <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                                                                        <button type='submit' class='btn btn-primary'>Save Changes</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>";
 
-                                                    // Archive Modal
-                                                    echo "<div class='modal fade' id='archiveModal$productId' tabindex='-1' aria-labelledby='archiveModalLabel' aria-hidden='true'>
-                                                        <div class='modal-dialog'>
-                                                            <div class='modal-content'>
-                                                                <div class='modal-header'>
-                                                                    <h5 class='modal-title' id='archiveModalLabel'>Archive Product</h5>
-                                                                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                                                                </div>
-                                                                <div class='modal-body'>
-                                                                    Are you sure you want to archive this product?
-                                                                </div>
-                                                                <div class='modal-footer'>
-                                                                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-                                                                    <a href='process/archive_product.php?id=$productId' class='btn btn-danger'>Archive</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>";
+                                                              // List of product Request
+                                                              echo "<div class='modal fade' id='archiveModal$request_id' tabindex='-1' aria-labelledby='archiveModalLabel' aria-hidden='true'>
+                                                              <div class='modal-dialog modal-xl'>
+                                                                  <div class='modal-content'>
+                                                                      <div class='modal-header'>
+                                                                          <h5 class='modal-title' id='archiveModalLabel'>List of Products</h5>
+                                                                          <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                                      </div>
+                                                                      <div class='modal-body'>
+
+                                                                     Request Status : $request_status 
+
+                                                                     
+                                                                      <div class='modal-footer'>
+                                                                          <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+                                                                          <a href='process/archive_product.php?id=$request_id' class='btn btn-danger'>Archive</a>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>";
+
+
                                                 }
                                             } else {
                                                 echo "<tr><td colspan='7'>No products found</td></tr>";

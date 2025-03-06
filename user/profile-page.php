@@ -76,11 +76,11 @@
                                     $firstName = trim($_POST['firstname']);
                                     $lastName = trim($_POST['lastname']);
                                     $email = trim($_POST['email']);
-                                    $mobile = trim($_POST['mobile']);
+                                    $mobile = trim($_POST['mobileno']);
                                     $gender = trim($_POST['gender']);
                                     $dob = trim($_POST['dob']);
-                                    $category = trim($_POST['category']);
-                                    $address2 = trim($_POST['address2']);
+                                    $category = trim($_POST['department']);
+                                    $address2 = trim($_POST['address']);
                                     $username = trim($_POST['username']);
                                     $password = trim($_POST['password']);
 
@@ -88,19 +88,24 @@
                                     if (empty($firstName) || empty($lastName) || empty($email) || empty($mobile) || empty($username) || empty($password)) {
                                         echo "<div class='alert alert-danger'>Please complete all required fields.</div>";
                                     } else {
-                                        // Update the user data in the database
-                                        $updateQuery = $conn->prepare("UPDATE users SET firstname=?, lastname=?, email=?, mobileno=?, gender=?, dob=?, category=?, address2=?, username=?, password=? WHERE id=?");
-                                        $updateQuery->bind_param("ssssssssssi", $firstName, $lastName, $email, $mobile, $gender, $dob, $category, $address2, $username, $password, $User_id);
-                                        if ($updateQuery->execute()) {
-                                            echo "<div class='alert alert-success'>User details updated successfully.</div>";
-                                        } else {
-                                            echo "<div class='alert alert-danger'>Error updating user details: " . $conn->error . "</div>";
-                                        }
+                                    // Update the user data in the database
+                                    $updateQuery = $conn->prepare("UPDATE users SET firstname=?, lastname=?, email=?, mobileno=?, gender=?, dob=?, department=?, address=?, username=?, password=? WHERE id=?");
+                                    $updateQuery->bind_param("ssssssssssi", $firstName, $lastName, $email, $mobile, $gender, $dob, $category, $address2, $username, $password, $User_id);
+                                                                        
+                                    if ($updateQuery->execute()) {
+                                        echo "<div class='alert alert-success'>User details updated successfully.</div>";
+                                        
+                                     echo "<script>window.location.href=window.location.href;</script>";
+                                        exit();
+                                    } else {
+                                        echo "<div class='alert alert-danger'>Error updating user details: " . $conn->error . "</div>";
+                                    }
+
                                     }
                                 }
                                 ?>                              
                                         <h4 class="card-title">Data Information</h4>
-                                        <form class="form-sample" method="POST" action="process/update-profile.php">
+                                        <form class="form-sample" method="POST" >
                                     <p class="card-description"> Personal info </p>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -110,7 +115,7 @@
 
                                                 <label class="col-sm-3 col-form-label">First Name</label>   
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="first_name" class="form-control" value="<?= htmlspecialchars($userData['firstname'] ?? '') ?>" />
+                                                    <input type="text" name="firstname" class="form-control" value="<?= htmlspecialchars($userData['firstname'] ?? '') ?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -118,7 +123,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Last Name</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="last_name" class="form-control" value="<?= htmlspecialchars($userData['lastname'] ?? '') ?>" />
+                                                    <input type="text" name="lastname" class="form-control" value="<?= htmlspecialchars($userData['lastname'] ?? '') ?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -136,7 +141,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Mobile No.</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="mobile" class="form-control" value="<?= htmlspecialchars($userData['mobileno'] ?? '') ?>" />
+                                                    <input type="text" name="mobileno" class="form-control" value="<?= htmlspecialchars($userData['mobileno'] ?? '') ?>" />
                                                 </div>
                                             </div>
                                         </div>
