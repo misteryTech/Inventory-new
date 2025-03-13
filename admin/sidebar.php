@@ -23,13 +23,6 @@
             </li>
 
 
-            <li class="nav-item  <?= $current_page =='product-request.php' ? 'active' : ''?>">
-              <a class="nav-link" href="product-request.php">
-                <i class="fa fa-shopping-bag  menu-icon"></i>
-                <span class="menu-title">Product Request</span>
-              </a>
-            </li>
-
 
             
             <li class="nav-item  <?= $current_page =='approved-request.php' ? 'active' : ''?>">
@@ -79,6 +72,17 @@
    
 
               </div>
+            </li>
+
+
+
+
+            
+            <li class="nav-item  <?= $current_page =='reports.php' ? 'active' : ''?>">
+              <a class="nav-link" href="reports.php">
+                <i class="fa fa-area-chart menu-icon"></i>
+                <span class="menu-title">Reports</span>
+              </a>
             </li>
 
 
