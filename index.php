@@ -5,7 +5,7 @@ include("header.php");
 ?>
   <style>
 .content-wrapper  {
-  background-image: url('blur-bg.jpg');
+  background-image: url('china-bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
