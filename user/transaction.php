@@ -11,7 +11,7 @@ include("header.php");
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Products Request</h4>
+                                <h4 class="card-title">Transfer Item</h4>
                             
                                 
                                 <!-- Button to print selected products -->
@@ -22,12 +22,12 @@ include("header.php");
                                         <thead>
                                             <tr>
                                 
-                                                <th>Session ID</th>
                                                 <th>Product Name</th>
-                                                <th>Status</th>
-                                                <th>Request Date</th>
-                                                <th>Manage By</th>
-                                                <th>Action</th>
+                                                <th>Quantity</th>
+                                                <th>Condition</th>
+                                                <th>Remarks</th>
+                                                <th>Release By</th>
+                                                <!-- <th>Action</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -40,28 +40,34 @@ include("header.php");
                                             INNER JOIN request_products AS RP ON RP.request_id = PR.request_id
                                             LEFT JOIN products AS P ON P.batch_number =  RP.product_id
 
-                                            WHERE PR.session_id = $User_id "; 
+                                            WHERE PR.session_id = $User_id  AND RP.remarks= 'Transferred'"; 
                                             $result = mysqli_query($conn, $query);
 
                                             if (mysqli_num_rows($result) > 0) {
                                                 if (mysqli_num_rows($result) > 0) {
                                                     while ($row = mysqli_fetch_assoc($result)) {
                                                         $request_id = $row['request_id'];
+                                                        $quantity = $row['quantity'];
+                                                        $product_condition = $row['product_condition'];
                                                         $product_name = $row['product_name'];
                                                         $RP_status = $row['RP_status'];
                                                         $approved1 = $row['approved1'];
                                                         $release_id = $row['release_form'];
+                                                        $remarks = $row['remarks'];
                                                         $request_date = date("d-m-Y", strtotime($row['request_date']));
                                                 
                                                         echo "<tr>";
-                                                        echo "<td>" . htmlspecialchars($request_id) . "</td>";
+                                                      
+                                                   
                                                         echo "<td>" . htmlspecialchars($product_name) . "</td>";
-                                                        echo "<td>" . (!empty($RP_status) ? $RP_status : "To Be Processed") . "</td>";
-                                                        echo "<td>" . $request_date . "</td>";
-                                                        echo "<td>" . (!empty($approved1) ? $approved1 : "Not yet Viewed") . "</td>";
-                                                        echo "<td>
-                                                                <button class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#archiveModal$request_id'>View Request</button>
-                                                              </td>";
+                                                        echo "<td>" . htmlspecialchars($quantity) . "</td>";
+                                                        echo "<td>" . htmlspecialchars($product_condition) . "</td>";
+                                              
+                                                        echo "<td>" . $remarks . "</td>";
+                                                         echo "<td>" . (!empty($approved1) ? $approved1 : "Not yet Viewed") . "</td>";
+                                                        // echo "<td>
+                                                        //         <button class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#archiveModal$request_id'>View Request</button>
+                                                        //       </td>";
                                                         echo "</tr>";
                                                 
                                                         // Modal for each request

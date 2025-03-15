@@ -21,7 +21,7 @@ $session_user = $_SESSION['username']; // Get the username from the session
 
             // Fetch products associated with the request_id
             $query = "
-                SELECT RP.*, P.*
+                SELECT RP.*, P.* , RP.status AS RP_status
                 FROM request_products AS RP
                 INNER JOIN products AS P ON RP.product_id = P.batch_number
                 WHERE RP.request_id = $request_id
@@ -43,7 +43,7 @@ $session_user = $_SESSION['username']; // Get the username from the session
                     echo '<thead>';
                     echo '<tr>';
                     echo '<th>Product Name</th>';
-                    echo '<th>Batch Number</th>';
+                    echo '<th>Product ID</th>';
                     echo '<th>Condition</th>';
                     echo '<th>Quantity Requested</th>';
                     echo '<th>Status</th>';
@@ -56,15 +56,18 @@ $session_user = $_SESSION['username']; // Get the username from the session
                     // Loop through and display the products
                     while ($row = mysqli_fetch_assoc($result)) {
                         $status = htmlspecialchars($row['status']);
+                        $RP_status = htmlspecialchars($row['RP_status']);
+
+
                         echo '<tr>';
                         echo '<td>' . htmlspecialchars($row['product_name']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['batch_number']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['product_condition']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['quantity']) . '</td>';
                         echo '<td>';
-                        if ($status === 'Approved') {
-                            echo "<span class='badge badge-success'>Approved</span>";
-                        } elseif ($status === 'Onprocess') {
+                        if ($RP_status === 'Declined') {
+                            echo "<span class='badge badge-danger'>Declined</span>";
+                        } elseif ($RP_status === 'Onprocess') {
                             echo "<span class='badge badge-warning'>Onprocess</span>";
                         } 
                         else {

@@ -22,7 +22,7 @@
                                             <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Dashboard</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#User" role="tab" aria-selected="false">User</a>
+                                            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#User" role="tab" aria-selected="false">Transaction</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#Products" role="tab" aria-selected="false">Products</a>
@@ -40,33 +40,29 @@
                                 <div class="tab-content tab-content-basic">
                                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="home-tab">
                                         <!-- Dashboard Content -->
+                               
+
+
                                         <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                    <div>
-                                                        <p class="statistics-title">Request Item</p>
-                                                        <h3 class="rate-percentage"></h3>
-                                                     
+                                             <div class="col-md-12">
+                                                 <label for="request_qr" class="form-label">Item QR Code</label>
+                                                    <div class="input-group">
+                                                        <input type="text" id="request_qr" class="form-control qr-input" placeholder="Scan or enter QR code">
+                                                        <button class="btn btn-success text-white qr-button" type="button" onclick="redirectToSearch('request_qr')">
+                                                            <i class="fas fa-search"></i>
+                                                        </button>
                                                     </div>
-                                                    <div>
-                                                        <p class="statistics-title">Release Item</p>
-                                                        <h3 class="rate-percentage">7,682</h3>
-                                             
-                                                    </div>
-                                                    <div>
-                                                        <p class="statistics-title">Total Products</p>
-                                                        <h3 class="rate-percentage">68.8</h3>
-                                                     
-                                                    </div>
-                                                    <div class="d-none d-md-block">
-                                                        <p class="statistics-title">Total User</p>
-                                                        <h3 class="rate-percentage">2m:35s</h3>
-                                                 
-                                                    </div>
-                                                </div>
+
+                                             </div>
+                                       
                                             </div>
-                                        </div>
+
+
+
                                     </div>
+
+         
+
 
                                     <div class="tab-pane fade" id="User" role="tabpanel" aria-labelledby="profile-tab">
                                         <!-- User Content -->
@@ -92,7 +88,7 @@
     <tbody>
         <?php
         // Fetch requested products from the database
-        $query_pr = "SELECT PR.*, U.*
+        $query_pr = "SELECT PR.*, U.* , PR.status AS PR_status
         
          FROM product_requests AS PR
          INNER JOIN users AS U ON U.id = PR.session_id 
@@ -102,6 +98,7 @@
         if ($result_pr && mysqli_num_rows($result_pr) > 0) {
             while ($row_pr = mysqli_fetch_assoc($result_pr)) {
                 $status = htmlspecialchars($row_pr['status']);
+                $PR_status = htmlspecialchars($row_pr['PR_status']);
                 $requestId = htmlspecialchars($row_pr['request_id']);
 
                 echo "<tr>";
@@ -136,7 +133,7 @@
 
                 // Release button
                 echo "<td>";
-                if ($status !== 'Released') {
+                if ($PR_status !== 'Pending') {
                     echo "<form method='POST' action='process/release_product.php'>";
                     echo "<input type='hidden' name='request_id' value='" . htmlspecialchars($row_pr['request_id']) . "'>";
 
@@ -147,8 +144,7 @@
                             echo "<input type='hidden' name='session_id' value='" . htmlspecialchars($row_pr['session_id']) . "'>";
                             echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($product['product_name']) . "'>";
                             echo "<input type='hidden' name='batch_number' value='" . htmlspecialchars($product['batch_number']) . "'>";
-                            echo "<label for='quantity'>Quantity to Release:</label>";
-                            echo "<input type='number' name='quantity' value='" . htmlspecialchars($product['quantity']) . "' min='1' max='" . htmlspecialchars($product['quantity']) . "' required>";
+                            echo "<input type='hidden' name='quantity' value='" . htmlspecialchars($product['quantity']) . "' min='1' max='" . htmlspecialchars($product['quantity']) . "' required>";
                             echo "<br>";
                         }
                     }
@@ -156,7 +152,7 @@
                     echo "<button type='submit' name='release_request' class='btn btn-secondary btn-sm'>Release Request</button>";
                     echo "</form>";
                 } else {
-                    echo "<button class='btn btn-primary btn-sm' disabled>Released</button>";
+                    echo "<button class='btn btn-warning btn-sm' disabled>Waiting for Admin Approval</button>";
                 }
                 echo "</td>";
 
@@ -277,6 +273,8 @@
 
 
 
+
+
             </tbody>
           </table>
         </div>
@@ -301,8 +299,8 @@ $sql = "SELECT PR.*, U.*
 $result = $conn->query($sql);
 
 // Fetch finished and remaining counts
-$finished_sql = "SELECT COUNT(*) AS finished FROM product_requests WHERE status = 'finished'";
-$remaining_sql = "SELECT COUNT(*) AS remaining FROM product_requests WHERE status = 'pending'";
+$finished_sql = "SELECT COUNT(*) AS finished FROM product_requests WHERE status = 'Onprocess'";
+$remaining_sql = "SELECT COUNT(*) AS remaining FROM product_requests WHERE status = 'Pending'";
 
 $finished_result = $conn->query($finished_sql)->fetch_assoc();
 $remaining_result = $conn->query($remaining_sql)->fetch_assoc();
@@ -329,7 +327,7 @@ $remaining_count = $remaining_result['remaining'] ?? 0;
     <div class="card-body">
       <div class="d-flex align-items-center justify-content-between mb-3">
         <h4 class="card-title card-title-dash">Product Requests</h4>
-        <p class="mb-0"><?php echo $finished_count; ?> Disposed, <?php echo $remaining_count; ?> Request</p>
+        <p class="mb-0"><?php echo $finished_count; ?> Pending, <?php echo $remaining_count; ?> Onprocess</p>
       </div>
       <ul class="bullet-line-list">
         <?php if ($result->num_rows > 0): ?>
@@ -416,4 +414,14 @@ $formattedDate = date("F j, Y h:i A", strtotime($originalDate));
     modalProductIdInput.value = productId;
     modalProductQuantity.value = current_quantity;
   });
+
+
+
+  function redirectToSearch(inputId) {
+        let inputValue = document.getElementById(inputId).value;
+        let searchPageUrl = 'search_page.php?q=' + encodeURIComponent(inputValue);
+        window.location.href = searchPageUrl;
+    }
+
+
 </script>

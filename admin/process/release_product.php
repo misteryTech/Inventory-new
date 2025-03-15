@@ -31,6 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
 
+            // Update request_product status to 'Released'
+            $query = "UPDATE request_products 
+                      SET status = 'Released' 
+                      WHERE request_id = ?";
+            $stmt = mysqli_prepare($conn, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $request_id);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+
             // Reduce product stock in `products` table
             $stock_query = "UPDATE products 
                             SET stock = stock - ? 

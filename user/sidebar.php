@@ -20,21 +20,24 @@
             <li class="nav-item nav-category">Inventory</li>
            
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="menu-icon fa fa-dropbox"></i>
+              <a class="nav-link  <?= $current_page =='product-list.php' ? 'active' : ''?>" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="menu-icon fa fa-box"></i>
                 <span class="menu-title">Product</span>
                 <i class="menu-arrow"></i>
               </a>
               <div class="collapse" id="ui-basic">
 
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="product-list.php">List product</a></li>
-                
+                  <li class="nav-item"> <a class="nav-link" href="product-list.php">Product List</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="transaction.php">Transaction</a></li>
+ 
                 </ul>
    
 
               </div>
             </li>
+
+
 
 
           </ul>

@@ -26,6 +26,7 @@ if (isset($_GET['department'])) {
                                                     <th>Position</th>
                                                     <th>Name</th>
                                                     <th>Reason</th>
+                                                    <th>Status</th>
                                                     <th>List of Item Requests</th>
                                                 </tr>
                                             </thead>
@@ -34,7 +35,7 @@ if (isset($_GET['department'])) {
                                                 $query = "SELECT  U.*, PR.*
                                                           FROM product_requests AS PR 
                                                           INNER JOIN users AS U ON PR.session_id = U.id
-                                                          WHERE PR.status = 'Pending' AND U.department = '$department'";
+                                                          WHERE U.department = '$department'";
                                                 $result = mysqli_query($conn, $query);
 
                                                 if (mysqli_num_rows($result) > 0) {
@@ -42,15 +43,18 @@ if (isset($_GET['department'])) {
                                                         $position = htmlspecialchars($row['position']);
                                                         $Fullname = htmlspecialchars($row['firstname'] . ' ' . $row['lastname']);
                                                         $comments = htmlspecialchars($row['comments']);
+                                                        $status = htmlspecialchars($row['status']);
                                                         $requestId = $row['request_id'];
 
                                                         echo "<tr>";
                                                         echo "<td>{$position}</td>";
                                                         echo "<td>{$Fullname}</td>";
+                                                     
                                                         echo "<td>{$comments}</td>";
+                                                        echo "<td>{$status}</td>";
                                                         echo "<td>";
                                                         // Fetch products based on request_id
-                                                        $productQuery = "SELECT P.product_name, RP.quantity
+                                                        $productQuery = "SELECT P.product_name, RP.quantity, RP.status AS RP_status
                                                                          FROM request_products AS RP
                                                                          INNER JOIN products AS P ON RP.product_id = P.batch_number
                                                                          WHERE RP.request_id = '$requestId'";
@@ -60,8 +64,9 @@ if (isset($_GET['department'])) {
                                                             echo "<ul>";
                                                             while ($product = mysqli_fetch_assoc($productResult)) {
                                                                 $productName = htmlspecialchars($product['product_name']);
+                                                                $RP_status = htmlspecialchars($product['RP_status']);
                                                                 $quantity = htmlspecialchars($product['quantity']);
-                                                                echo "<li>{$productName} - Quantity: {$quantity}</li>";
+                                                                echo "<li>{$productName} - Quantity: {$quantity} <br> Status: {$RP_status}</li>";
                                                             }
                                                             echo "</ul>";
                                                         } else {

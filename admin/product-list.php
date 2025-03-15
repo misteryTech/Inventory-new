@@ -25,6 +25,7 @@ include("header.php");
                                                 <th>Barcode</th>
                                        
                                                 <th>Product Name</th>
+                                                <th>Batch Number</th>
                                                 <th>Category</th>
                                                 <th>Condition</th>
                                                 <th>Price</th>
@@ -51,6 +52,7 @@ include("header.php");
                                                     echo "<td><img src='process/" . $row['qr_code_path'] . "' alt='QR Code' width='100' height='150'></td>";
                                                   
                                                     echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['batch_number']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['product_category']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['product_condition']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['product_price']) . "</td>";

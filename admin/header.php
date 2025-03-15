@@ -44,11 +44,21 @@ date_default_timezone_set('Asia/Manila');
     <link rel="shortcut icon" href="../gfi-logo.png" />
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
 
   <style>
     select.form-select {
     color: black;
     }
+
+
+
+    .input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+
+    padding: 13px 20px;
+}
+
+
+
   </style>

@@ -74,6 +74,41 @@ if ($currentHour < 12) {
     </div>
 </li>
 
+<li class="nav-item dropdown">
+
+<?php
+// Query to count the number of pending product requests
+$query_product_release = "SELECT COUNT(*) AS release_count FROM product_requests WHERE session_id = '$User_id' AND status = 'Released'";
+$result_query_product_release = mysqli_query($conn, $query_product_release);
+$requestCount = 0;
+
+if ($result_query_product_release && $row = mysqli_fetch_assoc($result_query_product_release)) {
+    $ReleaseCount = $row['release_count'];
+}
+?>
+
+
+              <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                <i class="icon-bell"></i>
+                <?= $ReleaseCount; ?>
+                <span class="count"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
+                <a  href="product-list.php" class="dropdown-item py-3 border-bottom">
+
+
+<p class="mb-0 fw-medium float-start">You have <?= $ReleaseCount; ?> request is ready for releasing</p>
+
+                  <span class="badge badge-pill badge-primary float-end">View all</span>
+                </a>
+              
+              </div>
+            </li>
+
+
+
+
+
            
             <?php
 // Fetch user details from the database

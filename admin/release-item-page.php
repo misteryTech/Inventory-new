@@ -11,8 +11,8 @@ include("header.php");
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Release Page</h4>
-                                <p class="card-description">List of Departments to release.</p>
+                                <h4 class="card-title">Department Request</h4>
+                                <p class="card-description">List of Departments Requested.</p>
                                 <div class="table-responsive">
                                     <table class="table table-striped">
                                         <thead>
@@ -26,7 +26,7 @@ include("header.php");
                                             $query = "SELECT DISTINCT U.department, PR.*
                                                       FROM product_requests AS PR 
                                                       INNER JOIN users AS U ON PR.session_id = U.id
-                                                      WHERE PR.status = 'Pending' 
+                                                
                                                       GROUP BY U.department";
                                             $result = mysqli_query($conn, $query);
 

@@ -47,19 +47,66 @@
                                             <div class="col-sm-8">
                                                 <div class="statistics-details d-flex align-items-center justify-content-between">
                                                     <div>
+
+
+                                                    <?php
+
+// Count total product requests
+$query = "SELECT COUNT(*) as request_count FROM product_requests WHERE session_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $User_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$requestCount = $row['request_count'];
+
+
+                                                    ?>
                                                         <p class="statistics-title">Request Item</p>
-                                                        <h3 class="rate-percentage">32.53%</h3>
+                                                        <h3 class="rate-percentage"><?= $requestCount ?></h3>
                                                 
                                                     </div>
                                                     <div>
-                                                        <p class="statistics-title">Approved Item</p>
-                                                        <h3 class="rate-percentage">7,682</h3>
+
+                                                    <?php
+
+// Count total product requests
+$remarks = 'Transferred';
+$query = "SELECT COUNT(*) as transfer_item FROM product_requests  AS PR
+INNER JOIN request_products AS RP ON rp.request_id = PR.request_id
+WHERE PR.session_id = ? AND RP.remarks = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("is", $User_id, $remarks);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$transferCount = $row['transfer_item'];
+
+                                                    ?>
+
+
+                                                        <p class="statistics-title">Transfer Item</p>
+                                                        <h3 class="rate-percentage"><?= $transferCount; ?></h3>
                                                  
                                                     </div>
 
                                                     <div>
+
+                                                    <?php
+// Count total product requests
+$status = 'Declined';
+$query = "SELECT COUNT(*) as decline_item FROM product_requests  AS PR
+INNER JOIN request_products AS RP ON rp.request_id = PR.request_id
+WHERE PR.session_id = ? AND RP.status = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("is", $User_id, $status);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$declineCount = $row['decline_item'];
+                                                    ?>
                                                         <p class="statistics-title">Declined Item</p>
-                                                        <h3 class="rate-percentage">7,682</h3>
+                                                        <h3 class="rate-percentage"><?= $declineCount ?></h3>
                                             
                                                     </div>
                                                

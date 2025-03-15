@@ -17,11 +17,17 @@
 
             <li class="nav-item  <?= $current_page =='release-item.php' ? 'active' : ''?>">
               <a class="nav-link" href="release-item-page.php">
-                <i class="fa fa-gear menu-icon"></i>
-                <span class="menu-title">Release Item</span>
+                <i class="fa fa-building menu-icon"></i>
+                <span class="menu-title">Department</span>
               </a>
             </li>
 
+            <li class="nav-item <?= ($current_page == 'product-request.php' || $current_page == 'view-requestpage.php') ? 'active' : '' ?>">
+    <a class="nav-link" href="product-request.php">
+        <i class="fa fa-shopping-cart menu-icon"></i>
+        <span class="menu-title">Product Requested</span>
+    </a>
+</li>
 
 
             
@@ -29,6 +35,16 @@
               <a class="nav-link" href="approved-request.php">
                 <i class="fa fa-check  menu-icon"></i>
                 <span class="menu-title">Approved Request</span>
+              </a>
+            </li>
+
+
+
+                    
+            <li class="nav-item  <?= $current_page =='released-request.php' ? 'active' : ''?>">
+              <a class="nav-link" href="release-request.php">
+                <i class="fa fa-tasks  menu-icon"></i>
+                <span class="menu-title">Release Request</span>
               </a>
             </li>
 
@@ -57,7 +73,7 @@
            
             <li class="nav-item">
               <a class="nav-link  <?= $current_page =='product-list.php' ? 'active' : ''?>" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="menu-icon fa fa-dropbox"></i>
+                <i class="menu-icon fa fa-box"></i>
                 <span class="menu-title">Product</span>
                 <i class="menu-arrow"></i>
               </a>
