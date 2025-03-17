@@ -104,11 +104,6 @@ if ($result_query_product_release && $row = mysqli_fetch_assoc($result_query_pro
               
               </div>
             </li>
-
-
-
-
-
            
             <?php
 // Fetch user details from the database
@@ -140,8 +135,7 @@ if (mysqli_num_rows($result) > 0) {
             <p class="mb-1 mt-3 fw-semibold"><?php echo $userName; ?></p>
             <p class="fw-light text-muted mb-0"><?php echo $userEmail; ?></p>
         </div>
-        <a class="dropdown-item" href="profile-page.php"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile  </a>
-        <a class="dropdown-item" href="logout.php"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i> Sign Out</a>
+    
     </div>
 </li>
           </ul>

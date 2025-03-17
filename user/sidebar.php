@@ -15,10 +15,19 @@
             </li>
 
 
+            <li class="nav-item  <?= $current_page =='profile-page.php' ? 'active' : ''?>">
+              <a class="nav-link" href="profile-page.php">
+                <i class="mdi mdi-account-outline menu-icon"></i>
+                <span class="menu-title">Profile</span>
+              </a>
+            </li>
+
+
 
 
             <li class="nav-item nav-category">Inventory</li>
-           
+            <i class="mdi mdi-product  menu-icon"></i>
+            
             <li class="nav-item">
               <a class="nav-link  <?= $current_page =='product-list.php' ? 'active' : ''?>" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <i class="menu-icon fa fa-box"></i>
@@ -35,6 +44,17 @@
    
 
               </div>
+            </li>
+
+
+            
+
+
+            <li class="nav-item  <?= $current_page =='logout.php' ? 'active' : ''?>">
+              <a class="nav-link" href="logout.php">
+                <i class="mdi mdi-power  menu-icon"></i>
+                <span class="menu-title">Logout</span>
+              </a>
             </li>
 
 

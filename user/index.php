@@ -73,7 +73,7 @@ $requestCount = $row['request_count'];
 // Count total product requests
 $remarks = 'Transferred';
 $query = "SELECT COUNT(*) as transfer_item FROM product_requests  AS PR
-INNER JOIN request_products AS RP ON rp.request_id = PR.request_id
+INNER JOIN request_products AS RP ON RP.request_id = PR.request_id
 WHERE PR.session_id = ? AND RP.remarks = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("is", $User_id, $remarks);
@@ -96,7 +96,7 @@ $transferCount = $row['transfer_item'];
 // Count total product requests
 $status = 'Declined';
 $query = "SELECT COUNT(*) as decline_item FROM product_requests  AS PR
-INNER JOIN request_products AS RP ON rp.request_id = PR.request_id
+INNER JOIN request_products AS RP ON RP.request_id = PR.request_id
 WHERE PR.session_id = ? AND RP.status = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("is", $User_id, $status);
