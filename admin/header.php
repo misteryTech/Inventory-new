@@ -86,5 +86,11 @@ date_default_timezone_set('Asia/Manila');
 }
 
 
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  padding: .1em .5em !important;
+}
 
+button.dt-button, div.dt-button, a.dt-button, input.dt-button {
+  padding: .1em .5em !important;
+}
   </style>

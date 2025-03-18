@@ -133,26 +133,46 @@ include("header.php");
 
 <!-- ✅ Include DataTables and Print Button -->
 <script>$(document).ready(function() {
-    $('#reportTable').DataTable({
-        "pageLength": 10,
-        "responsive": true,
-        "autoWidth": false,
-        "dom": 'Bfrtip',
-        "buttons": [
-            {
-                extend: 'print',
-                text: '<i class="fa fa-print"></i> Print',
-                title: 'Report',
-                customize: function(win) {
-                    $(win.document.body).css('font-size', '10px'); // ✅ Reduce font size
-                    $(win.document.body).find('table')
-                        .addClass('display')
-                        .css('font-size', '9px')
-                        .css('table-layout', 'fixed'); // ✅ Prevent stretching
-                }
+$('#reportTable').DataTable({
+    "pageLength": 10,
+    "responsive": true,
+    "autoWidth": false,
+    "dom": 'Bfrtip',
+    "buttons": [
+        {
+            extend: 'print',
+            text: '<i class="fa fa-print"></i> Print',
+            title: 'Report',
+            customize: function (win) {
+                $(win.document.body).css('font-size', '10px'); // Reduce font size
+                $(win.document.body).find('table')
+                    .addClass('display')
+                    .css('font-size', '9px')
+                    .css('table-layout', 'fixed'); // Prevent stretching
+
+                // Add Prepared by and Noted by side by side
+                $(win.document.body).append(`
+                    <div style="margin-top:50px;">
+                        <table style="width:100%; font-size:12px; border-collapse:collapse;">
+                            <tr>
+                                <td style="width:50%; text-align:left;">
+                                    <strong>Prepared by:</strong><br>
+                                    <u><h3>Charlotte Lapura </h3> </u><br>
+                                </td>
+                                <td style="width:50%; text-align:right;">
+                                    <strong>Noted by:</strong><br>
+                                  <u><h3>Amor Irish D. Lozano</h3></u><br>
+                                     <h5>CPA, MBA <h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                `);
             }
-        ]
-    });
+        }
+    ]
 });
+});
+
 
 </script>
