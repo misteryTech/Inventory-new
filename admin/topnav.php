@@ -10,7 +10,7 @@
               <img src="../LOGO1.png" alt="logo" />
             </a>
             <a class="navbar-brand brand-logo-mini" href="index.php">
-              <img src="assets/images/logo-mini.svg" alt="logo" />
+           <H4>GFI</H4>
             </a>
           </div>
         </div>
@@ -40,7 +40,7 @@ if ($currentHour < 12) {
           </ul>
           <ul class="navbar-nav ms-auto">
            
-            <li class="nav-item d-none d-lg-block">
+            <li class="nav-item ">
               <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
                 <span class="input-group-addon input-group-prepend border-right">
                   <span class="icon-calendar input-group-text calendar-icon"></span>
@@ -100,7 +100,7 @@ if (mysqli_num_rows($result) > 0) {
 ?>
 
 
-<li class="nav-item dropdown d-none d-lg-block user-dropdown">
+<li class="nav-item dropdown  user-dropdown">
     <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
         <img class="img-xs rounded-circle" src="<?php echo $userImage; ?>" alt="Profile image">
     </a>

@@ -44,3 +44,54 @@ date_default_timezone_set('Asia/Manila');
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
   </head>
+<style>
+  .content-wrapper {
+    background: #ca142c;
+    color: #fff;
+    font-size: 35px;
+    padding: 1.5rem 2.187rem 1.5rem 3.5rem;
+    width: 100%;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+}
+
+
+
+.home-tab .nav-tabs .nav-item .nav-link {
+    background: transparent;
+    color: #ffffff;
+    font-size: 25px;
+}
+
+
+.home-tab .nav-tabs .nav-item .nav-link.active {
+    background: transparent;
+    color: #08006f;
+    font-size: 25px;
+}
+
+
+
+.home-tab .statistics-details .statistics-title {
+    font-style: normal;
+    font-weight: 500;
+     font-size: 20px;
+    line-height: 18px;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.home-tab .statistics-details .rate-percentage {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 36px;
+    color:rgb(253, 253, 253);
+    margin-bottom: 0;
+}
+
+
+
+
+
+</style>

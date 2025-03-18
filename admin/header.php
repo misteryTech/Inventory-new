@@ -60,5 +60,31 @@ date_default_timezone_set('Asia/Manila');
 }
 
 
+.content-wrapper {
+    background: #ca142c;
+    color: #fff;
+    font-size: 35px;
+    padding: 1.5rem 2.187rem 1.5rem 3.5rem;
+    width: 100%;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+}
+
+
+
+.home-tab .nav-tabs .nav-item .nav-link {
+    background: transparent;
+    color: #ffffff;
+    font-size: 25px;
+}
+
+
+.home-tab .nav-tabs .nav-item .nav-link.active {
+    background: transparent;
+    color: #08006f;
+    font-size: 25px;
+}
+
+
 
   </style>

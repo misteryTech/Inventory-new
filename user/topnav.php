@@ -41,7 +41,7 @@ if ($currentHour < 12) {
           <ul class="navbar-nav ms-auto">
      
  
-<li class="nav-item dropdown d-none d-lg-block">
+<li class="nav-item dropdown ">
     <a class="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="categoryDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false"> Select Category </a>
     <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="categoryDropdown">
         <a class="dropdown-item py-3">
