@@ -37,7 +37,7 @@
                                                 <thead>
                                                     <tr>
                                                 
-                                                        <th>Barcode</th>
+                                            
                                                         <th>Product Name</th>
                                                         <th>Category</th>
                                                         <th>Condition</th>
@@ -54,7 +54,7 @@
                                                     while ($row = mysqli_fetch_assoc($result)) {
                                                         echo "<tr>";
                                                
-                                                        echo "<td><img src='process/" . htmlspecialchars($row['qr_code_path']) . "' alt='QR Code' width='100' height='150'></td>";
+                                                 
                                                         echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row['product_category']) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row['product_condition']) . "</td>";
@@ -76,7 +76,7 @@
                                                 <thead>
                                                     <tr>
                                          
-                                                        <th>Barcode</th>
+                                                       
                                                         <th>Product Name</th>
                                                         <th>Category</th>
                                                         <th>Condition</th>
@@ -93,8 +93,7 @@
                                                     while ($row = mysqli_fetch_assoc($result)) {
                                                         echo "<tr>";
                                                
-                                                        echo "<td><img src='process/" . htmlspecialchars($row['qr_code_path']) . "' alt='QR Code' width='100' height='150'></td>";
-                                                        echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
+                                                    
                                                         echo "<td>" . htmlspecialchars($row['product_category']) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row['product_condition']) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row['stock']) . "</td>";
@@ -116,7 +115,7 @@
                                                 <thead>
                                                     <tr>
                                             
-                                                        <th>Barcode</th>
+                                                  
                                                         <th>Product Name</th>
                                                         <th>Category</th>
                                                         <th>Condition</th>
@@ -134,7 +133,7 @@
                                                     while ($row = mysqli_fetch_assoc($result)) {
                                                         echo "<tr>";
                                            
-                                                        echo "<td><img src='process/" . htmlspecialchars($row['qr_code_path']) . "' alt='QR Code' width='100' height='150'></td>";
+                                                     
                                                         echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row['product_category']) . "</td>";
                                                         echo "<td>" . htmlspecialchars($row['product_condition']) . "</td>";

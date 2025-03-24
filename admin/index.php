@@ -92,6 +92,7 @@
         
          FROM product_requests AS PR
          INNER JOIN users AS U ON U.id = PR.session_id 
+         ORDER BY request_date DESC
         ";
         $result_pr = mysqli_query($conn, $query_pr);
 
@@ -100,11 +101,33 @@
                 $status = htmlspecialchars($row_pr['status']);
                 $PR_status = htmlspecialchars($row_pr['PR_status']);
                 $requestId = htmlspecialchars($row_pr['request_id']);
+           
+                  // Retrieve and escape the request_date value
+
+// Retrieve and sanitize request_date
+$request_date_raw = isset($row_pr['request_date']) ? htmlspecialchars($row_pr['request_date']) : null;
+
+if ($request_date_raw) {
+    try {
+        // Create DateTime object from request_date
+        $dateTime = new DateTime($request_date_raw);
+
+        // Format to Month Name Day, Year hh:mm AM/PM
+        $request_date_formatted = $dateTime->format('F d, Y g:i A');
+    } catch (Exception $e) {
+        $request_date_formatted = "Invalid date";
+    }
+} else {
+    $request_date_formatted = "No date provided";
+}
+
+
 
                 echo "<tr>";
                 echo "<td>" . htmlspecialchars($row_pr['firstname']. ' ' . $row_pr['lastname']) . "</td>";
                 echo "<td>" . htmlspecialchars($row_pr['department']) . "</td>";
-                echo "<td>" . htmlspecialchars($row_pr['request_date']) . "</td>";
+
+                echo "<td>" . $request_date_formatted . "</td>";
                 echo "<td>" . htmlspecialchars($row_pr['status']) . "</td>";
                 echo "<td>" . htmlspecialchars($row_pr['release_form']) . "</td>";
                 
