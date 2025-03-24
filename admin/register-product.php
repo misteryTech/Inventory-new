@@ -39,18 +39,19 @@
 
                     <form action="process/register_product.php" method="POST" enctype="multipart/form-data">
 
-        <div class="form-group">
-            <label for="productName">Serial Number</label>
-            <div class="input-group">
-                 <input type="text" class="form-control" id="batchNumber" name="batch_number" placeholder="Enter batch number" required>
-                 <button type="button" class="btn btn-secondary" id="generateBatchNumber">Generate</button>
-            </div>
-        </div>
+                    <div class="form-group">
+    <label for="batchNumber">Serial Number</label>
+    <div class="input-group">
+        <input type="text" class="form-control" id="batchNumber" name="batch_number" placeholder="Enter batch number" required>
+        <button type="button" class="btn btn-secondary" id="generateBatchNumber">Generate</button>
+    </div>
+    <small id="batchCheckResult" class="text-muted"></small>
+</div>
 
-        <div class="form-group mt-3">
-            <label for="productName">Product Name</label>
-            <input type="text" class="form-control" id="productName" name="product_name" placeholder="Enter product name" required>
-        </div>
+<div class="form-group mt-3">
+    <label for="productName">Product Name</label>
+    <input type="text" class="form-control" id="productName" name="product_name" placeholder="Enter product name" required>
+</div>
 
         <div class="form-group mt-3">
             <label for="productDescription">Product Description</label>
@@ -282,4 +283,36 @@ document.addEventListener("DOMContentLoaded", function() {
 
                  });
       });
+
+
+
+
+      document.getElementById('batchNumber').addEventListener('blur', function () {
+    let batchNumber = this.value.trim();
+    let resultText = document.getElementById('batchCheckResult');
+
+    if (batchNumber === '') {
+        resultText.textContent = "";
+        return;
+    }
+
+    fetch(`process/check-product.php?batch_number=${batchNumber}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.exists) {
+                resultText.textContent = "✔ Product exists in the database.";
+                resultText.classList.remove("text-danger");
+                resultText.classList.add("text-success");
+            } else {
+                resultText.textContent = "❌ Product not found.";
+                resultText.classList.remove("text-success");
+                resultText.classList.add("text-danger");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            resultText.textContent = "⚠ Error checking product.";
+            resultText.classList.add("text-danger");
+        });
+});
    </script>

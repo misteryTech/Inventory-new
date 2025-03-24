@@ -4,19 +4,21 @@ include("../connection.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get data from the form
     $id = intval($_POST['id']);
-    $product_name = htmlspecialchars($_POST['product_name']);
-    $product_price = htmlspecialchars($_POST['product_price']);
+    $instock = htmlspecialchars($_POST['instock']);
+    $stockAdded = htmlspecialchars($_POST['stockAdded']);
 
+        $result  = $instock + $stockAdded;
 
+        
     // Update query
-    $query = "UPDATE products SET product_name = ?, product_price = ? WHERE id = ?";
+    $query = "UPDATE products SET stock = ? WHERE id = ?";
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "sii", $product_name, $product_price, $id);
+        mysqli_stmt_bind_param($stmt, "ii", $result, $id);
         if (mysqli_stmt_execute($stmt)) {
             echo "<script>
-                alert('Product updated successfully.');
+                alert('Product stocks successfully.');
                 window.location.href = '../product-list.php'; // Redirect back to the Product table
             </script>";
         } else {

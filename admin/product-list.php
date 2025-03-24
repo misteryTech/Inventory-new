@@ -61,6 +61,7 @@ include("header.php");
                                                     echo "<td>
                                                         <button class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal$productId'>Edit</button>
                                                         <button class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#archiveModal$productId'>Archive</button>
+                                                        <button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#addStocksModal$productId'>Add Stocks</button>
                                                     </td>";
                                                     echo "</tr>";
 
@@ -85,7 +86,7 @@ include("header.php");
                                                                         </div>
                                                                         <div class='mb-3'>
                                                                             <label for='stock' class='form-label'>Stock</label>
-                                                                            <input type='number' class='form-control' name='stock' value='" . htmlspecialchars($row['stock']) . "' required>
+                                                                            <input type='number' class='form-control' name='stock' value='" . htmlspecialchars($row['stock']) . "' disabled>
                                                                         </div>
                                                                     </div>
                                                                     <div class='modal-footer'>
@@ -96,6 +97,48 @@ include("header.php");
                                                             </div>
                                                         </div>
                                                     </div>";
+
+
+
+                                                                                // Edit Modal
+                                                                                echo "<div class='modal fade' id='addStocksModal$productId' tabindex='-1' aria-labelledby='addStocksModalLabel' aria-hidden='true'>
+                                                                                <div class='modal-dialog'>
+                                                                                    <div class='modal-content'>
+                                                                                        <div class='modal-header'>
+                                                                                            <h5 class='modal-title' id='addStocksModalLabel'>Add Stocks</h5>
+                                                                                            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                                                        </div>
+                                                                                        <form action='process/stocking.php' method='POST'>
+                                                                                            <div class='modal-body'>
+                                                                                                <input type='hidden' name='id' value='$productId'>
+                                                                                              <input type='hidden' class='form-control' name='instock' value='" . htmlspecialchars($row['stock']) . "' >
+                                                                                            
+                                                                                                <div class='mb-3'>
+                                                                                                    <label for='stock' class='form-label'>Instocks Remaining</label>
+                                                                                                    <input type='number' class='form-control'  value='" . htmlspecialchars($row['stock']) . "' disabled>
+                                                                                                </div>
+
+                                                                                                 
+                                                                                                <div class='mb-3'>
+                                                                                                    <label for='stock' class='form-label'>Stocks to be Added</label>
+                                                                                                    <input type='number' class='form-control' name='stockAdded' value='' >
+                                                                                                </div>
+
+
+
+                                                                                            </div>
+                                                                                            <div class='modal-footer'>
+                                                                                                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                                                                                                <button type='submit' class='btn btn-primary'>Save Changes</button>
+                                                                                            </div>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>";
+
+                                                                            
+
+
 
                                                     // Archive Modal
                                                     echo "<div class='modal fade' id='archiveModal$productId' tabindex='-1' aria-labelledby='archiveModalLabel' aria-hidden='true'>
