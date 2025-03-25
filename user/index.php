@@ -216,7 +216,7 @@ $isWednesday = (date('l') == 'Wednesday');
           <p><strong>Selected Products:</strong></p>
           <ul id="selectedProductsList"></ul>
           <div class="mb-3">
-            <label for="comments" class="form-label">Add Comments (Optional)</label>
+            <label for="comments" class="form-label">Remarks</label>
             <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
           </div>
       </div>
@@ -331,6 +331,103 @@ $result = mysqli_query($conn, $query);
     </div>
 </body>
 <script>
+
+  
+    
+function showConfirmationModal(event) {
+
+    
+event.preventDefault();
+
+// Get selected products
+const selectedProducts = document.querySelectorAll('input[name="selected_products[]"]:checked');
+const selectedProductsList = document.getElementById('selectedProductsList');
+selectedProductsList.innerHTML = ''; // Clear previous list
+
+let hasError = false; // Track validation errors
+
+// Populate modal with selected product details
+selectedProducts.forEach((product) => {
+  const productId = product.value;
+
+  // Get corresponding quantity input
+  const quantityInput = document.querySelector(`input[name="request_quantity[${productId}]"]`);
+  const quantity = quantityInput ? parseInt(quantityInput.value, 10) : 0;
+
+  // Get product details (parent row)
+  const productRow = product.closest('tr');
+  const productName = productRow.querySelector('h6').textContent.trim();
+  const productImage = productRow.querySelector('img').src;
+
+  // Get the available stock
+  const stockElement = productRow.querySelector('.product-stock');
+  const availableStock = stockElement ? parseInt(stockElement.textContent.trim(), 10) : 0;
+
+  // Validate quantity
+  if (isNaN(quantity) || quantity <= 0) {
+    alert(`Please enter a valid quantity for ${productName}.`);
+    quantityInput.focus();
+    hasError = true;
+    return;
+  }
+
+  if (quantity > availableStock) {
+    alert(`Requested quantity for ${productName} exceeds available stock (${availableStock}).`);
+    quantityInput.focus();
+    hasError = true;
+    return;
+  }
+
+  // Create list item with product details
+  const listItem = document.createElement('li');
+  listItem.className = 'd-flex align-items-center mb-2';
+
+  // Add product image
+  const imgElement = document.createElement('img');
+  imgElement.src = productImage;
+  imgElement.alt = productName;
+  imgElement.style.width = '50px';
+  imgElement.style.height = '50px';
+  imgElement.className = 'me-2';
+
+  // Add product name and quantity
+  const details = document.createElement('span');
+  details.textContent = `${productName} - Quantity: ${quantity}`;
+
+  // Append to list item
+  listItem.appendChild(imgElement);
+  listItem.appendChild(details);
+
+  // Add list item to modal
+  selectedProductsList.appendChild(listItem);
+
+  // Store selected products for form submission
+  const selectedProductsInput = document.createElement('input');
+  selectedProductsInput.type = 'hidden';
+  selectedProductsInput.name = 'selected_products[]';  // name attribute should match the backend code
+  selectedProductsInput.value = productId;  // store product ID
+  document.getElementById('registrationForm').appendChild(selectedProductsInput);
+
+  // Store quantity for each selected product
+  const quantityInputHidden = document.createElement('input');
+  quantityInputHidden.type = 'hidden';
+  quantityInputHidden.name = `request_quantity[${productId}]`;  // name attribute should match the backend code
+  quantityInputHidden.value = quantity;
+  document.getElementById('registrationForm').appendChild(quantityInputHidden);
+});
+
+// If there are errors, do not show the modal
+if (hasError) {
+  return;
+}
+
+// Show the modal
+const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+confirmationModal.show();
+}
+
+
+
   // Event listener for when the reorder button is clicked
   var reorderModal = document.getElementById('reorderModal');
   reorderModal.addEventListener('show.bs.modal', function (event) {

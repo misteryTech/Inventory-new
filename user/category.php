@@ -108,7 +108,7 @@ $isWednesday = (date('l') == 'Wednesday');
                                                     <p><strong>Selected Products:</strong></p>
                                                     <ul id="selectedProductsList"></ul>
                                                     <div class="mb-3">
-                                                        <label for="comments" class="form-label">Add Comments (Optional)</label>
+                                                        <label for="comments" class="form-label">Remarks</label>
                                                         <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
                                                     </div>
                                             </div>
